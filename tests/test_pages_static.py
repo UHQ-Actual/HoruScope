@@ -16,6 +16,8 @@ class PagesStaticTests(unittest.TestCase):
         self.assertIn('id="sourceMode"', html)
         self.assertIn('data-source="stories.json"', html)
         self.assertIn("HoruScope", html)
+        self.assertNotIn("BLS LASST", html)
+        self.assertNotIn('id="trendTable"', html)
 
     def test_readme_links_github_pages_url(self):
         readme = (ROOT / "README.md").read_text(encoding="utf-8")

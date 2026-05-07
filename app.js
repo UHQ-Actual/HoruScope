@@ -187,33 +187,6 @@ function renderWatchlist() {
   });
 }
 
-function renderTrends() {
-  const rows = state.data?.trends || [];
-  els.trendTable.replaceChildren();
-  const header = create("div", "trend-row header");
-  ["State", "Series", "Month", "Rate", "Trend"].forEach((label) => header.append(create("span", "", label)));
-  els.trendTable.append(header);
-
-  if (!rows.length) {
-    const row = create("div", "trend-row");
-    row.append(create("span", "", "none"), create("span", "", "No BLS trend data available"), create("span", "", ""), create("span", "", ""), create("span", "", ""));
-    els.trendTable.append(row);
-    return;
-  }
-
-  rows.forEach((trend) => {
-    const row = create("div", "trend-row");
-    row.append(
-      create("span", "", trend.state || ""),
-      create("span", "tc-mono", trend.series || ""),
-      create("span", "", trend.latest_month || ""),
-      create("span", "", `${trend.latest_rate ?? ""}%`),
-      create("span", `trend-${trend.trend || "flat"}`, trend.trend || "flat")
-    );
-    els.trendTable.append(row);
-  });
-}
-
 function renderStats() {
   els.storyCount.textContent = state.stories.length;
   els.windowDays.textContent = `${state.data?.window_days || 7} days`;
@@ -255,8 +228,7 @@ async function init() {
     "storiesGrid",
     "activeFilter",
     "selectedStory",
-    "watchlistItems",
-    "trendTable"
+    "watchlistItems"
   ].forEach((id) => {
     els[id] = document.getElementById(id);
   });
@@ -284,7 +256,6 @@ async function init() {
   renderStories();
   renderSelectedStory();
   renderWatchlist();
-  renderTrends();
 }
 
 document.addEventListener("DOMContentLoaded", init);

@@ -37,14 +37,13 @@
 
         <nav class="rail-nav" aria-label="sections">
           <a href="#stories">cases</a>
-          <a href="#trends">trend states</a>
           <a href="#watchlist">watchlist</a>
           <a href="https://github.com/UHQ-Actual/HoruScope">source repo</a>
         </nav>
 
         <div class="rail-card">
           <span class="tc-label">Chain of custody</span>
-          <p>RSS, GDELT, optional NewsAPI, BLS LASST, SQLite dedupe.</p>
+          <p>RSS, GDELT, optional NewsAPI, official DOL cases, SQLite dedupe.</p>
         </div>
       </aside>
 
@@ -121,20 +120,9 @@
             <div id="watchlistItems" class="watchlist-items"></div>
           </article>
         </section>
-
-        <section id="trends" class="tc-card trend-card" aria-labelledby="trendsHeading">
-          <div class="section-heading compact">
-            <div>
-              <span class="tc-label">BLS LASST</span>
-              <h2 id="trendsHeading">State trend signals</h2>
-            </div>
-            <span class="tc-status tc-status-ok">12-month label</span>
-          </div>
-          <div id="trendTable" class="trend-table" role="table" aria-label="state unemployment trend table"></div>
-        </section>
       </main>
     </div>
 
-    <script src="app.js?v=20260507-case-data" defer></script>
+    <script src="app.js?v=20260507-no-trends" defer></script>
   </body>
 </html>

@@ -277,8 +277,7 @@
 }
 
 .evidence-card,
-.watchlist-card,
-.trend-card {
+.watchlist-card {
   display: grid;
   gap: var(--tc-space-4);
   padding: var(--tc-space-5);
@@ -320,52 +319,6 @@
   border: 1px solid var(--tc-border-subtle);
   border-radius: var(--tc-radius-md);
   background: var(--tc-bg-chrome);
-}
-
-.trend-table {
-  overflow-x: auto;
-  border: 1px solid var(--tc-border-subtle);
-  border-radius: var(--tc-radius-md);
-}
-
-.trend-row {
-  display: grid;
-  grid-template-columns: 80px 1fr 120px 120px 120px;
-  min-width: 640px;
-  border-bottom: 1px solid var(--tc-border-subtle);
-}
-
-.trend-row:last-child {
-  border-bottom: 0;
-}
-
-.trend-row.header {
-  background: var(--tc-bg-chrome);
-}
-
-.trend-row span {
-  padding: 11px 12px;
-  color: var(--tc-fg-secondary);
-}
-
-.trend-row.header span {
-  color: var(--tc-fg-muted);
-  font-size: var(--tc-fs-label);
-  font-weight: 600;
-  letter-spacing: 1.1px;
-  text-transform: uppercase;
-}
-
-.trend-rising {
-  color: var(--tc-amber) !important;
-}
-
-.trend-falling {
-  color: var(--tc-green) !important;
-}
-
-.trend-flat {
-  color: var(--tc-cyan) !important;
 }
 
 @media (max-width: 1040px) {
