@@ -20,6 +20,12 @@ function formatDate(value) {
   return date.toISOString().slice(0, 10);
 }
 
+function formatSourceMode(value) {
+  if (value === "curated_official_cases") return "official cases";
+  if (value === "collected") return "live collector";
+  return "stories.json";
+}
+
 function create(tag, className, content) {
   const node = document.createElement(tag);
   if (className) node.className = className;
@@ -212,6 +218,7 @@ function renderStats() {
   els.storyCount.textContent = state.stories.length;
   els.windowDays.textContent = `${state.data?.window_days || 7} days`;
   els.generatedAt.textContent = formatDate(state.data?.generated_at);
+  els.sourceMode.textContent = formatSourceMode(state.data?.source_mode);
 }
 
 function bindEvents() {
@@ -241,6 +248,7 @@ async function init() {
     "generatedAt",
     "storyCount",
     "windowDays",
+    "sourceMode",
     "searchInput",
     "stateFilter",
     "topicFilter",

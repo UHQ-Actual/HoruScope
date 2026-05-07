@@ -177,6 +177,81 @@ RSS_SOURCES = [
     },
 ]
 
+CURATED_MIDWEST_STORIES = [
+    {
+        "title": "Federal court orders Wisconsin-based medical care partnership to pay back wages, damages to 68 employees denied overtime",
+        "link": "https://www.dol.gov/newsroom/releases/whd/whd20260115",
+        "source": "DOL WHD",
+        "source_type": "official",
+        "published": "2026-01-15T12:00:00+00:00",
+        "summary": "WAUSAU, WI - A federal court ordered North Central Health Care to pay $162,486 in back wages and liquidated damages after WHD found off-the-clock and overtime violations affecting 68 case managers.",
+        "raw": {"curated": True},
+    },
+    {
+        "title": "US Department of Labor recovers $207K in back wages, damages for 157 workers after Michigan-based contractor failed to pay correct overtime wages",
+        "link": "https://www.dol.gov/newsroom/releases/whd/whd20250522",
+        "source": "DOL WHD",
+        "source_type": "official",
+        "published": "2025-05-22T12:00:00+00:00",
+        "summary": "A Michigan electrical services contractor paid $207,470 in back wages and damages after WHD found it excluded non-discretionary bonuses from overtime calculations, a repeat FLSA issue.",
+        "raw": {"curated": True},
+    },
+    {
+        "title": "US Department of Labor secures agreement with JBS USA to address child labor compliance",
+        "link": "https://www.dol.gov/newsroom/releases/whd/whd20250113",
+        "source": "DOL WHD",
+        "source_type": "official",
+        "published": "2025-01-13T12:00:00+00:00",
+        "summary": "CHICAGO - JBS USA agreed to provide $4M for people and communities affected by unlawful child labor, with targeted prevention work in Iowa, Minnesota and Nebraska meatpacking communities.",
+        "raw": {"curated": True},
+    },
+    {
+        "title": "Court orders 3 West Michigan taco restaurants to pay $823K in back wages, damages to 177 workers shortchanged minimum wage, overtime",
+        "link": "https://www.dol.gov/newsroom/releases/sol/sol20241220",
+        "source": "DOL Office of Solicitor",
+        "source_type": "official",
+        "published": "2024-12-20T12:00:00+00:00",
+        "summary": "GRAND RAPIDS, MI - A federal court ordered three West Michigan Barrio Tacos operators to pay $823,326 after finding an illegal tip pool, minimum wage failures and overtime violations.",
+        "raw": {"curated": True},
+    },
+    {
+        "title": "Minneapolis restaurant group Boludo will pay $105K in back wages, damages, penalties after US Department of Labor finds overtime violations",
+        "link": "https://www.dol.gov/newsroom/releases/whd/whd20241218",
+        "source": "DOL WHD",
+        "source_type": "official",
+        "published": "2024-12-18T12:00:00+00:00",
+        "summary": "MINNEAPOLIS - Boludo restaurant operators agreed to pay $105,784 after WHD found overtime, tip-pool, recordkeeping, child labor and retaliation issues across four restaurants.",
+        "raw": {"curated": True},
+    },
+    {
+        "title": "US Department of Labor recovers $125K in back wages, damages from operators of 3 Chicago area restaurants for 53 workers denied overtime",
+        "link": "https://www.dol.gov/newsroom/releases/sol/sol20241217",
+        "source": "DOL Office of Solicitor",
+        "source_type": "official",
+        "published": "2024-12-17T12:00:00+00:00",
+        "summary": "CHICAGO - A consent judgment required D'Nuez Corp. and its owners to pay 53 workers $125,000 for overtime back wages and liquidated damages after WHD found FLSA violations.",
+        "raw": {"curated": True},
+    },
+    {
+        "title": "Court orders Pontiac supermarket, restaurant to pay $192K in wages, damages, penalties for alleged retaliation against workers denied overtime",
+        "link": "https://www.dol.gov/newsroom/releases/sol/sol20241216",
+        "source": "DOL Office of Solicitor",
+        "source_type": "official",
+        "published": "2024-12-16T12:00:00+00:00",
+        "summary": "PONTIAC, MI - Carnival Market operators were ordered to pay $192,500 after WHD found overtime violations and alleged retaliation tied to workers' cooperation with investigators.",
+        "raw": {"curated": True},
+    },
+    {
+        "title": "Little Caesars franchisee pays $26K in penalties for employing children to operate oven, dough mixer, work beyond allowed hours",
+        "link": "https://www.dol.gov/newsroom/releases/whd/whd20250115-0",
+        "source": "DOL WHD",
+        "source_type": "official",
+        "published": "2025-01-15T12:00:00+00:00",
+        "summary": "FARMINGTON HILLS, MI - WHD assessed $26,341 in child labor penalties after a Little Caesars operator employed five minors illegally, including hazardous baking equipment and prohibited hours.",
+        "raw": {"curated": True},
+    },
+]
+
 
 def load_env(path: str = ".env") -> None:
     env_path = Path(path)
@@ -742,6 +817,28 @@ def parse_list(value: Any) -> list[str]:
     return [part.strip() for part in str(value).split(",") if part.strip()]
 
 
+def enrich_item_for_display(item: dict[str, Any]) -> dict[str, Any]:
+    enriched = dict(item)
+    classified = classify_item(enriched)
+    if not enriched.get("score"):
+        enriched["score"] = classified["score"]
+    if not parse_list(enriched.get("states")):
+        enriched["states"] = ",".join(classified["states"])
+    if not parse_list(enriched.get("statutes")):
+        enriched["statutes"] = ",".join(classified["statutes"])
+    if not parse_list(enriched.get("sectors")):
+        enriched["sectors"] = ",".join(classified["sectors"])
+    if not parse_list(enriched.get("topics")):
+        enriched["topics"] = ",".join(classified["topics"])
+    if not parse_list(enriched.get("matched_terms")):
+        enriched["matched_terms"] = ",".join(classified["matched_terms"])
+    return enriched
+
+
+def curated_midwest_story_items() -> list[dict[str, Any]]:
+    return [enrich_item_for_display(item) for item in CURATED_MIDWEST_STORIES if should_keep(item)]
+
+
 def query_items(conn: sqlite3.Connection, days: int) -> list[dict[str, Any]]:
     since = (datetime.now(timezone.utc) - timedelta(days=days)).isoformat()
     rows = conn.execute(
@@ -864,14 +961,15 @@ def story_card(item: dict[str, Any]) -> dict[str, Any]:
 
 
 def render_pages_data(items: list[dict[str, Any]], trend_rows: list[dict[str, Any]] | None, days: int) -> dict[str, Any]:
-    stories = [story_card(item) for item in items if int(item.get("score") or 0) >= 3]
+    display_items = [enrich_item_for_display(item) for item in items]
+    stories = [story_card(item) for item in display_items if int(item.get("score") or 0) >= 3]
     return {
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "window_days": days,
         "stories": stories,
         "trends": trend_rows or [],
-        "watchlist": watchlist_rows(items),
-        "summary": analyst_synthesis(items),
+        "watchlist": watchlist_rows(display_items),
+        "summary": analyst_synthesis(display_items),
         "empty_state": {
             "title": "No current Midwest WHD story captured",
             "body": "Run the collector again or enable additional sources. The interface will populate from stories.json when the pipeline captures in-scope items.",
@@ -921,7 +1019,14 @@ def run_digest(args: argparse.Namespace) -> int:
 
 def run_site_data(args: argparse.Namespace) -> int:
     conn = connect_db()
-    items = [item for item in query_items(conn, args.days) if should_keep(item)]
+    try:
+        items = [item for item in query_items(conn, args.days) if should_keep(item)]
+    finally:
+        conn.close()
+    source_mode = "collected"
+    if not items and not args.no_curated:
+        items = curated_midwest_story_items()
+        source_mode = "curated_official_cases"
     trend_rows: list[dict[str, Any]] = []
     if not args.no_trends:
         try:
@@ -929,6 +1034,7 @@ def run_site_data(args: argparse.Namespace) -> int:
         except Exception as exc:  # noqa: BLE001 - site data can render without trends
             logging.error("BLS trend table unavailable for site data: %s\n%s", exc, traceback.format_exc())
     data = render_pages_data(items, trend_rows, args.days)
+    data["source_mode"] = source_mode
     Path(args.out).write_text(json.dumps(data, indent=2, ensure_ascii=True) + "\n", encoding="utf-8")
     print(f"wrote {args.out}")
     return 0
@@ -974,6 +1080,7 @@ def build_parser() -> argparse.ArgumentParser:
     site_data.add_argument("--days", type=int, default=7)
     site_data.add_argument("--out", default="stories.json")
     site_data.add_argument("--no-trends", action="store_true")
+    site_data.add_argument("--no-curated", action="store_true", help="disable official Midwest case fallback")
     site_data.set_defaults(func=run_site_data)
 
     all_cmd = sub.add_parser("all", help="collect then render digest")

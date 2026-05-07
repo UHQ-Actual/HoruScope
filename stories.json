@@ -1,7 +1,198 @@
 {
-  "generated_at": "2026-05-07T01:27:51.754450+00:00",
+  "generated_at": "2026-05-07T11:21:06.724476+00:00",
   "window_days": 7,
-  "stories": [],
+  "stories": [
+    {
+      "title": "Federal court orders Wisconsin-based medical care partnership to pay back wages, damages to 68 employees denied overtime",
+      "where": [
+        "WI"
+      ],
+      "topic": "FLSA",
+      "source": "DOL WHD",
+      "date": "2026-01-15",
+      "score": 8,
+      "snippet": "WAUSAU, WI - A federal court ordered North Central Health Care to pay $162,486 in back wages and liquidated damages after WHD found off-the-clock and overtime violations affecting 68 case managers.",
+      "link": "https://www.dol.gov/newsroom/releases/whd/whd20260115",
+      "statutes": [
+        "FLSA"
+      ],
+      "sectors": [],
+      "terms": [
+        "FLSA",
+        "back wages",
+        "overtime",
+        "payroll fraud"
+      ]
+    },
+    {
+      "title": "US Department of Labor recovers $207K in back wages, damages for 157 workers after Michigan-based contractor failed to pay correct overtime wages",
+      "where": [
+        "MI"
+      ],
+      "topic": "FLSA",
+      "source": "DOL WHD",
+      "date": "2025-05-22",
+      "score": 10,
+      "snippet": "A Michigan electrical services contractor paid $207,470 in back wages and damages after WHD found it excluded non-discretionary bonuses from overtime calculations, a repeat FLSA issue.",
+      "link": "https://www.dol.gov/newsroom/releases/whd/whd20250522",
+      "statutes": [
+        "FLSA"
+      ],
+      "sectors": [
+        "construction"
+      ],
+      "terms": [
+        "FLSA",
+        "back wages",
+        "construction",
+        "overtime"
+      ]
+    },
+    {
+      "title": "US Department of Labor secures agreement with JBS USA to address child labor compliance",
+      "where": [
+        "IA",
+        "IL",
+        "MN",
+        "NE"
+      ],
+      "topic": "FLSA",
+      "source": "DOL WHD",
+      "date": "2025-01-13",
+      "score": 10,
+      "snippet": "CHICAGO - JBS USA agreed to provide $4M for people and communities affected by unlawful child labor, with targeted prevention work in Iowa, Minnesota and Nebraska meatpacking communities.",
+      "link": "https://www.dol.gov/newsroom/releases/whd/whd20250113",
+      "statutes": [
+        "FLSA"
+      ],
+      "sectors": [
+        "meatpacking"
+      ],
+      "terms": [
+        "FLSA",
+        "child labor",
+        "meatpacking"
+      ]
+    },
+    {
+      "title": "Court orders 3 West Michigan taco restaurants to pay $823K in back wages, damages to 177 workers shortchanged minimum wage, overtime",
+      "where": [
+        "MI"
+      ],
+      "topic": "FLSA",
+      "source": "DOL Office of Solicitor",
+      "date": "2024-12-20",
+      "score": 10,
+      "snippet": "GRAND RAPIDS, MI - A federal court ordered three West Michigan Barrio Tacos operators to pay $823,326 after finding an illegal tip pool, minimum wage failures and overtime violations.",
+      "link": "https://www.dol.gov/newsroom/releases/sol/sol20241220",
+      "statutes": [
+        "FLSA"
+      ],
+      "sectors": [
+        "restaurants"
+      ],
+      "terms": [
+        "FLSA",
+        "back wages",
+        "minimum wage",
+        "overtime",
+        "restaurants",
+        "tip credit"
+      ]
+    },
+    {
+      "title": "Minneapolis restaurant group Boludo will pay $105K in back wages, damages, penalties after US Department of Labor finds overtime violations",
+      "where": [
+        "MN"
+      ],
+      "topic": "FLSA",
+      "source": "DOL WHD",
+      "date": "2024-12-18",
+      "score": 10,
+      "snippet": "MINNEAPOLIS - Boludo restaurant operators agreed to pay $105,784 after WHD found overtime, tip-pool, recordkeeping, child labor and retaliation issues across four restaurants.",
+      "link": "https://www.dol.gov/newsroom/releases/whd/whd20241218",
+      "statutes": [
+        "FLSA"
+      ],
+      "sectors": [
+        "restaurants"
+      ],
+      "terms": [
+        "FLSA",
+        "back wages",
+        "child labor",
+        "overtime",
+        "restaurants"
+      ]
+    },
+    {
+      "title": "US Department of Labor recovers $125K in back wages, damages from operators of 3 Chicago area restaurants for 53 workers denied overtime",
+      "where": [
+        "IL"
+      ],
+      "topic": "FLSA",
+      "source": "DOL Office of Solicitor",
+      "date": "2024-12-17",
+      "score": 10,
+      "snippet": "CHICAGO - A consent judgment required D'Nuez Corp. and its owners to pay 53 workers $125,000 for overtime back wages and liquidated damages after WHD found FLSA violations.",
+      "link": "https://www.dol.gov/newsroom/releases/sol/sol20241217",
+      "statutes": [
+        "FLSA"
+      ],
+      "sectors": [
+        "restaurants"
+      ],
+      "terms": [
+        "FLSA",
+        "back wages",
+        "overtime",
+        "restaurants"
+      ]
+    },
+    {
+      "title": "Court orders Pontiac supermarket, restaurant to pay $192K in wages, damages, penalties for alleged retaliation against workers denied overtime",
+      "where": [
+        "MI"
+      ],
+      "topic": "FLSA",
+      "source": "DOL Office of Solicitor",
+      "date": "2024-12-16",
+      "score": 10,
+      "snippet": "PONTIAC, MI - Carnival Market operators were ordered to pay $192,500 after WHD found overtime violations and alleged retaliation tied to workers' cooperation with investigators.",
+      "link": "https://www.dol.gov/newsroom/releases/sol/sol20241216",
+      "statutes": [
+        "FLSA"
+      ],
+      "sectors": [
+        "restaurants"
+      ],
+      "terms": [
+        "FLSA",
+        "overtime",
+        "restaurants"
+      ]
+    },
+    {
+      "title": "Little Caesars franchisee pays $26K in penalties for employing children to operate oven, dough mixer, work beyond allowed hours",
+      "where": [
+        "MI"
+      ],
+      "topic": "FLSA",
+      "source": "DOL WHD",
+      "date": "2025-01-15",
+      "score": 8,
+      "snippet": "FARMINGTON HILLS, MI - WHD assessed $26,341 in child labor penalties after a Little Caesars operator employed five minors illegally, including hazardous baking equipment and prohibited hours.",
+      "link": "https://www.dol.gov/newsroom/releases/whd/whd20250115-0",
+      "statutes": [
+        "FLSA"
+      ],
+      "sectors": [],
+      "terms": [
+        "FLSA",
+        "child labor"
+      ]
+    }
+  ],
   "trends": [
     {
       "state": "IA",
@@ -104,10 +295,59 @@
       "months": 12
     }
   ],
-  "watchlist": [],
-  "summary": "",
+  "watchlist": [
+    {
+      "topic": "child labor",
+      "states": [
+        "IA",
+        "IL",
+        "MI",
+        "MN",
+        "NE"
+      ]
+    },
+    {
+      "topic": "back wages",
+      "states": [
+        "IL",
+        "MI",
+        "MN",
+        "WI"
+      ]
+    },
+    {
+      "topic": "overtime",
+      "states": [
+        "IL",
+        "MI",
+        "MN",
+        "WI"
+      ]
+    },
+    {
+      "topic": "FLSA",
+      "states": [
+        "IL",
+        "MI"
+      ]
+    },
+    {
+      "topic": "minimum wage",
+      "states": [
+        "MI"
+      ]
+    },
+    {
+      "topic": "payroll fraud",
+      "states": [
+        "WI"
+      ]
+    }
+  ],
+  "summary": "State concentration: MI (4), IL (2), MN (2), WI (1). Sector concentration: restaurants (4), construction (1), meatpacking (1). Wage theory concentration: overtime (6), back wages (5), child labor (3), FLSA (2).",
   "empty_state": {
     "title": "No current Midwest WHD story captured",
     "body": "Run the collector again or enable additional sources. The interface will populate from stories.json when the pipeline captures in-scope items."
-  }
+  },
+  "source_mode": "curated_official_cases"
 }

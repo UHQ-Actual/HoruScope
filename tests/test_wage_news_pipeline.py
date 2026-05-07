@@ -163,6 +163,35 @@ class WageNewsPipelineTests(unittest.TestCase):
         self.assertEqual(data["watchlist"][0]["topic"], "back wages")
         self.assertIn("No current", p.render_pages_data([], [], days=7)["empty_state"]["title"])
 
+    def test_curated_cases_enrich_into_story_cards(self):
+        items = p.curated_midwest_story_items()
+
+        data = p.render_pages_data(items, [], days=7)
+
+        self.assertGreaterEqual(len(data["stories"]), 5)
+        self.assertTrue(all(story["where"] for story in data["stories"]))
+        self.assertTrue(any(story["source"] == "DOL WHD" for story in data["stories"]))
+        self.assertTrue(any("FLSA" in story["topic"] or "child labor" in story["topic"] for story in data["stories"]))
+
+    def test_site_data_uses_curated_fallback_when_database_is_empty(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            original_db = p.os.environ.get(p.DB_ENV)
+            p.os.environ[p.DB_ENV] = str(Path(tmp) / "wage_news.db")
+            out = Path(tmp) / "stories.json"
+            try:
+                args = p.argparse.Namespace(days=7, out=str(out), no_trends=True, no_curated=False)
+                code = p.run_site_data(args)
+                data = p.json.loads(out.read_text(encoding="utf-8"))
+            finally:
+                if original_db is None:
+                    p.os.environ.pop(p.DB_ENV, None)
+                else:
+                    p.os.environ[p.DB_ENV] = original_db
+
+        self.assertEqual(code, 0)
+        self.assertEqual(data["source_mode"], "curated_official_cases")
+        self.assertGreater(len(data["stories"]), 0)
+
 
 if __name__ == "__main__":
     unittest.main()

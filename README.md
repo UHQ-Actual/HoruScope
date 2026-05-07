@@ -49,7 +49,7 @@ python wage_news_pipeline.py site-data --days 7 --out stories.json
 
 Each item includes Where, Topic, Source with date, Score, Snippet, and Link.
 
-`site-data` writes `stories.json` for the GitHub Pages interface.
+`site-data` writes `stories.json` for the GitHub Pages interface. If the current database window has no scored Midwest items, it fills the page from a curated official DOL Midwest case library. Pass `--no-curated` to render the empty state instead.
 
 ## Deployment
 

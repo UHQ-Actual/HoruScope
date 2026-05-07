@@ -12,7 +12,8 @@ class PagesStaticTests(unittest.TestCase):
         self.assertIn('<body class="tc">', html)
         self.assertIn('href="theme.css"', html)
         self.assertIn('href="app.css"', html)
-        self.assertIn('src="app.js"', html)
+        self.assertIn('src="app.js', html)
+        self.assertIn('id="sourceMode"', html)
         self.assertIn('data-source="stories.json"', html)
         self.assertIn("HoruScope", html)
 
