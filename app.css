@@ -224,7 +224,20 @@
 .story-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--tc-space-2);
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.story-card .tc-chip {
+  min-height: 24px;
+  padding: 5px 8px;
+  border-color: var(--tc-border-subtle);
+  border-radius: var(--tc-radius-sm);
+  background: var(--tc-bg-elevated);
+  color: var(--tc-fg-secondary);
+  font-family: var(--tc-font-mono);
+  font-size: 12px;
+  line-height: 1;
 }
 
 .story-score {
