@@ -198,13 +198,20 @@
 }
 
 .story-card {
+  appearance: none;
   display: grid;
   gap: var(--tc-space-4);
   min-height: 260px;
   padding: var(--tc-space-5);
+  color: var(--tc-fg);
+  font: inherit;
   text-align: left;
   cursor: pointer;
   transition: border-color var(--tc-dur) var(--tc-ease), transform var(--tc-dur) var(--tc-ease);
+}
+
+.story-card h3 {
+  color: var(--tc-fg);
 }
 
 .story-card:hover,
@@ -230,6 +237,7 @@
 }
 
 .story-score strong {
+  color: var(--tc-fg);
   font-family: var(--tc-font-mono);
   font-size: 28px;
   font-weight: 500;
