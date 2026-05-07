@@ -133,10 +133,44 @@ function renderStories() {
   stories.forEach((story) => els.storiesGrid.append(renderStoryCard(story)));
 }
 
+function valueList(values, fallback) {
+  const cleaned = values.filter(Boolean);
+  return cleaned.length ? cleaned.join(", ") : fallback;
+}
+
+function inferLead(story) {
+  const where = valueList(story.where || [], "Midwest");
+  const sectors = valueList(story.sectors || [], "employer");
+  const score = Number(story.score || 0);
+  if (score >= 9) return `Prioritize ${where} ${sectors} leads with similar pay practices.`;
+  return `Monitor ${where} ${sectors} leads for repeat wage-hour indicators.`;
+}
+
+function inferTheory(story) {
+  const terms = (story.terms || []).filter((term) => term !== "FLSA");
+  if (terms.length) return valueList(terms.slice(0, 4), "wage-hour signal");
+  return story.topic || "wage-hour signal";
+}
+
+function inferWatchNext(story) {
+  const text = `${story.title || ""} ${story.snippet || ""}`.toLowerCase();
+  if (text.includes("child labor")) return "Track repeat operators, franchise networks, hazardous tasks, and minor-hour patterns.";
+  if (text.includes("retaliation")) return "Watch for worker cooperation issues, injunction activity, and repeat retaliation claims.";
+  if (text.includes("tip")) return "Watch tip-pool rules, tip-credit notices, and dual-job side work.";
+  if (text.includes("overtime")) return "Watch payroll methods, bonus inclusion, off-the-clock work, and repeat overtime patterns.";
+  return "Watch source updates, related employers, and local coverage that confirms a broader pattern.";
+}
+
+function detailRow(label, value) {
+  const row = create("div", "detail-row");
+  row.append(create("span", "tc-label", label), create("strong", "", value));
+  return row;
+}
+
 function renderSelectedStory() {
   const story = state.selected || state.stories[0];
   els.selectedStory.replaceChildren();
-  els.selectedStory.append(create("span", "tc-label", "Selected evidence"));
+  els.selectedStory.append(create("span", "tc-label", "Case detail"));
 
   if (!story) {
     els.selectedStory.append(
@@ -146,19 +180,22 @@ function renderSelectedStory() {
     return;
   }
 
-  const grid = create("div", "evidence-grid");
+  const meta = create("div", "detail-meta");
   [
-    ["Where", (story.where || []).join(", ") || "unknown"],
-    ["Topic", story.topic || "wage signal"],
+    ["Where", valueList(story.where || [], "unknown")],
     ["Source", story.source || "unknown"],
     ["Date", story.date || "unknown"],
-    ["Sectors", (story.sectors || []).join(", ") || "unclassified"],
     ["Score", story.score ?? 0]
   ].forEach(([label, value]) => {
-    const cell = create("div", "");
-    cell.append(create("span", "tc-label", label), create("span", "", value));
-    grid.append(cell);
+    meta.append(detailRow(label, value));
   });
+
+  const analysis = create("div", "case-analysis");
+  [
+    ["Targeting lead", inferLead(story)],
+    ["Wage theory", inferTheory(story)],
+    ["Watch next", inferWatchNext(story)]
+  ].forEach(([label, value]) => analysis.append(detailRow(label, value)));
 
   const link = create("a", "evidence-link", "open source");
   link.href = story.link || "#";
@@ -168,7 +205,8 @@ function renderSelectedStory() {
   els.selectedStory.append(
     create("h2", "", story.title || "Untitled story"),
     create("p", "", story.snippet || "No snippet available."),
-    grid,
+    meta,
+    analysis,
     link
   );
 }
