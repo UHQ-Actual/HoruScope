@@ -7,3 +7,4 @@ wage_news.db-*
 logs/
 brief.md
 out/
+.playwright-mcp/
