@@ -173,17 +173,42 @@ function renderSelectedStory() {
   );
 }
 
-function renderWatchlist() {
-  els.watchlistItems.replaceChildren();
-  const rows = state.data?.watchlist || [];
-  if (!rows.length) {
-    els.watchlistItems.append(create("p", "", "No watchlist topics in the current window."));
+function topValues(values, limit = 3) {
+  const counts = new Map();
+  values.filter(Boolean).forEach((value) => counts.set(value, (counts.get(value) || 0) + 1));
+  return [...counts.entries()]
+    .sort((left, right) => right[1] - left[1] || left[0].localeCompare(right[0]))
+    .slice(0, limit)
+    .map(([value]) => value);
+}
+
+function signalRow(label, value) {
+  const item = create("div", "signal-row");
+  item.append(create("span", "tc-label", label), create("strong", "", value));
+  return item;
+}
+
+function renderSignals() {
+  els.signalItems.replaceChildren();
+  const stories = state.stories;
+  if (!stories.length) {
+    els.signalItems.append(create("p", "", "No case signals loaded."));
     return;
   }
-  rows.forEach((row) => {
-    const item = create("div", "watch-row");
-    item.append(create("strong", "", row.topic), create("span", "tc-mono", (row.states || []).join(", ")));
-    els.watchlistItems.append(item);
+
+  const states = [...new Set(stories.flatMap((story) => story.where || []))].sort();
+  const sources = topValues(stories.map((story) => story.source));
+  const sectors = topValues(stories.flatMap((story) => story.sectors || []));
+  const theories = topValues(stories.flatMap((story) => story.terms || []).filter((term) => term !== "FLSA"));
+
+  [
+    ["cases", `${stories.length} active`],
+    ["states", states.join(", ") || "none tagged"],
+    ["source mix", sources.join(", ") || "unknown"],
+    ["sectors", sectors.join(", ") || "unclassified"],
+    ["theories", theories.join(", ") || "unclassified"]
+  ].forEach(([label, value]) => {
+    els.signalItems.append(signalRow(label, value));
   });
 }
 
@@ -228,7 +253,7 @@ async function init() {
     "storiesGrid",
     "activeFilter",
     "selectedStory",
-    "watchlistItems"
+    "signalItems"
   ].forEach((id) => {
     els[id] = document.getElementById(id);
   });
@@ -255,7 +280,7 @@ async function init() {
   renderStats();
   renderStories();
   renderSelectedStory();
-  renderWatchlist();
+  renderSignals();
 }
 
 document.addEventListener("DOMContentLoaded", init);

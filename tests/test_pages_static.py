@@ -14,10 +14,13 @@ class PagesStaticTests(unittest.TestCase):
         self.assertIn('href="app.css', html)
         self.assertIn('src="app.js', html)
         self.assertIn('id="sourceMode"', html)
+        self.assertIn('id="caseSignals"', html)
+        self.assertIn('id="signalItems"', html)
         self.assertIn('data-source="stories.json"', html)
         self.assertIn("HoruScope", html)
         self.assertNotIn("BLS LASST", html)
         self.assertNotIn('id="trendTable"', html)
+        self.assertNotIn("Pattern board", html)
 
     def test_readme_links_github_pages_url(self):
         readme = (ROOT / "README.md").read_text(encoding="utf-8")

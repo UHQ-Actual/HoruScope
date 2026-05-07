@@ -277,7 +277,7 @@
 }
 
 .evidence-card,
-.watchlist-card {
+.signal-card {
   display: grid;
   gap: var(--tc-space-4);
   padding: var(--tc-space-5);
@@ -305,20 +305,28 @@
   text-decoration: none;
 }
 
-.watchlist-items {
+.signal-items {
   display: grid;
-  gap: var(--tc-space-3);
+  gap: var(--tc-space-2);
 }
 
-.watch-row {
-  display: flex;
-  align-items: center;
+.signal-row {
+  display: grid;
+  grid-template-columns: 88px minmax(0, 1fr);
+  align-items: start;
   justify-content: space-between;
   gap: var(--tc-space-3);
   padding: var(--tc-space-3);
   border: 1px solid var(--tc-border-subtle);
   border-radius: var(--tc-radius-md);
   background: var(--tc-bg-chrome);
+}
+
+.signal-row strong {
+  color: var(--tc-fg-secondary);
+  font-size: var(--tc-fs-small);
+  font-weight: 500;
+  line-height: var(--tc-lh-snug);
 }
 
 @media (max-width: 1040px) {
