@@ -818,6 +818,19 @@ def watchlist(items: list[dict[str, Any]]) -> str:
     return "\n".join(lines)
 
 
+def watchlist_rows(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    groups: dict[str, set[str]] = defaultdict(set)
+    for item in items:
+        states = parse_list(item.get("states")) or ["unknown"]
+        labels = parse_list(item.get("topics")) or parse_list(item.get("statutes")) or ["general wage signal"]
+        for label in labels[:3]:
+            groups[label].update(states)
+    return [
+        {"topic": topic, "states": sorted(states)}
+        for topic, states in sorted(groups.items(), key=lambda row: (-len(row[1]), row[0]))
+    ]
+
+
 def analyst_synthesis(items: list[dict[str, Any]]) -> str:
     if not items:
         return ""
@@ -832,6 +845,38 @@ def analyst_synthesis(items: list[dict[str, Any]]) -> str:
     if topic_counts:
         parts.append(f"Wage theory concentration: {', '.join(f'{k} ({v})' for k, v in topic_counts.most_common(4))}.")
     return " ".join(parts)
+
+
+def story_card(item: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "title": clean_text(item.get("title")),
+        "where": parse_list(item.get("states")),
+        "topic": topic_for_item(item),
+        "source": clean_text(item.get("source") or "Unknown"),
+        "date": display_date(item.get("published") or item.get("collected_at")),
+        "score": int(item.get("score") or 0),
+        "snippet": make_snippet(str(item.get("summary") or item.get("title") or ""), 280),
+        "link": clean_text(item.get("link")),
+        "statutes": parse_list(item.get("statutes")),
+        "sectors": parse_list(item.get("sectors")),
+        "terms": parse_list(item.get("matched_terms")),
+    }
+
+
+def render_pages_data(items: list[dict[str, Any]], trend_rows: list[dict[str, Any]] | None, days: int) -> dict[str, Any]:
+    stories = [story_card(item) for item in items if int(item.get("score") or 0) >= 3]
+    return {
+        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "window_days": days,
+        "stories": stories,
+        "trends": trend_rows or [],
+        "watchlist": watchlist_rows(items),
+        "summary": analyst_synthesis(items),
+        "empty_state": {
+            "title": "No current Midwest WHD story captured",
+            "body": "Run the collector again or enable additional sources. The interface will populate from stories.json when the pipeline captures in-scope items.",
+        },
+    }
 
 
 def render_digest(items: list[dict[str, Any]], trend_rows: list[dict[str, Any]] | None, days: int) -> str:
@@ -874,6 +919,21 @@ def run_digest(args: argparse.Namespace) -> int:
     return 0
 
 
+def run_site_data(args: argparse.Namespace) -> int:
+    conn = connect_db()
+    items = [item for item in query_items(conn, args.days) if should_keep(item)]
+    trend_rows: list[dict[str, Any]] = []
+    if not args.no_trends:
+        try:
+            trend_rows = fetch_bls_trends()
+        except Exception as exc:  # noqa: BLE001 - site data can render without trends
+            logging.error("BLS trend table unavailable for site data: %s\n%s", exc, traceback.format_exc())
+    data = render_pages_data(items, trend_rows, args.days)
+    Path(args.out).write_text(json.dumps(data, indent=2, ensure_ascii=True) + "\n", encoding="utf-8")
+    print(f"wrote {args.out}")
+    return 0
+
+
 def run_all(args: argparse.Namespace) -> int:
     collect_args = argparse.Namespace(
         days=args.days,
@@ -909,6 +969,12 @@ def build_parser() -> argparse.ArgumentParser:
     digest.add_argument("--out")
     digest.add_argument("--no-trends", action="store_true")
     digest.set_defaults(func=run_digest)
+
+    site_data = sub.add_parser("site-data", help="write stories.json for the GitHub Pages UI")
+    site_data.add_argument("--days", type=int, default=7)
+    site_data.add_argument("--out", default="stories.json")
+    site_data.add_argument("--no-trends", action="store_true")
+    site_data.set_defaults(func=run_site_data)
 
     all_cmd = sub.add_parser("all", help="collect then render digest")
     all_cmd.add_argument("--days", type=int, default=7)

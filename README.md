@@ -2,12 +2,15 @@
 
 Midwest wage and hour enforcement intelligence pipeline.
 
+Live interface: [https://uhq-actual.github.io/HoruScope/](https://uhq-actual.github.io/HoruScope/)
+
 ## Quick Start
 
 ```bash
 python -m pip install -r requirements.txt
 python -m unittest discover
 python wage_news_pipeline.py all --days 7 --out brief.md
+python wage_news_pipeline.py site-data --days 7 --out stories.json
 ```
 
 The default SQLite database is `wage_news.db`. Set `WAGE_DB` to use another path.
@@ -19,6 +22,7 @@ python wage_news_pipeline.py collect
 python wage_news_pipeline.py trends
 python wage_news_pipeline.py digest --days 7 --out brief.md
 python wage_news_pipeline.py all --days 7 --out brief.md
+python wage_news_pipeline.py site-data --days 7 --out stories.json
 ```
 
 ## Inputs
@@ -44,6 +48,8 @@ python wage_news_pipeline.py all --days 7 --out brief.md
 - Analyst synthesis when the item set supports it
 
 Each item includes Where, Topic, Source with date, Score, Snippet, and Link.
+
+`site-data` writes `stories.json` for the GitHub Pages interface.
 
 ## Deployment
 

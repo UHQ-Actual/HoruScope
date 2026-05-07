@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>HoruScope Midwest Wage Intelligence</title>
+    <meta
+      name="description"
+      content="Midwest wage and hour enforcement intelligence brief interface for HoruScope."
+    >
+    <link rel="stylesheet" href="theme.css">
+    <link rel="stylesheet" href="app.css">
+  </head>
+  <body class="tc">
+    <div class="app-shell" data-source="stories.json">
+      <aside class="rail" aria-label="case navigation">
+        <a class="brand" href="./" aria-label="HoruScope home">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 48 48" role="img">
+              <path d="M12 18c4-4 20-4 24 0" />
+              <path d="M24 10v26" />
+              <path d="M16 18l-6 12h12l-6-12Z" />
+              <path d="M32 18l-6 12h12l-6-12Z" />
+              <path d="M16 36h16" />
+              <path d="M20 40h8" />
+            </svg>
+          </span>
+          <span>
+            <span class="wordmark">horuscope</span>
+            <span class="rail-subtitle">wage case radar</span>
+          </span>
+        </a>
+
+        <nav class="rail-nav" aria-label="sections">
+          <a href="#stories">cases</a>
+          <a href="#trends">trend states</a>
+          <a href="#watchlist">watchlist</a>
+          <a href="https://github.com/UHQ-Actual/HoruScope">source repo</a>
+        </nav>
+
+        <div class="rail-card">
+          <span class="tc-label">Chain of custody</span>
+          <p>RSS, GDELT, optional NewsAPI, BLS LASST, SQLite dedupe.</p>
+        </div>
+      </aside>
+
+      <main class="workspace">
+        <header class="hero">
+          <div class="hero-copy">
+            <span class="tc-badge tc-badge-info">Midwest WHD intelligence</span>
+            <h1>HoruScope</h1>
+            <p>
+              A case-board interface for wage and hour story leads across IL,
+              IN, IA, KS, MI, MN, MO, NE, OH, and WI.
+            </p>
+          </div>
+          <div class="hero-panel" aria-label="pipeline status">
+            <div>
+              <span class="tc-label">Generated</span>
+              <strong id="generatedAt">loading</strong>
+            </div>
+            <div>
+              <span class="tc-label">Story cards</span>
+              <strong id="storyCount">0</strong>
+            </div>
+            <div>
+              <span class="tc-label">Window</span>
+              <strong id="windowDays">7 days</strong>
+            </div>
+          </div>
+        </header>
+
+        <section class="control-strip" aria-label="story filters">
+          <label class="search-box">
+            <span class="tc-label">Search evidence</span>
+            <input id="searchInput" class="tc-input" type="search" placeholder="state, statute, sector, source">
+          </label>
+          <label>
+            <span class="tc-label">State</span>
+            <select id="stateFilter" class="tc-select">
+              <option value="">All states</option>
+            </select>
+          </label>
+          <label>
+            <span class="tc-label">Theory</span>
+            <select id="topicFilter" class="tc-select">
+              <option value="">All theories</option>
+            </select>
+          </label>
+        </section>
+
+        <section id="stories" class="section-grid" aria-labelledby="storiesHeading">
+          <div class="section-heading">
+            <div>
+              <span class="tc-label">Open case files</span>
+              <h2 id="storiesHeading">Story leads</h2>
+            </div>
+            <span id="activeFilter" class="tc-status tc-status-info">all evidence</span>
+          </div>
+          <div id="storiesGrid" class="stories-grid"></div>
+        </section>
+
+        <section class="evidence-row">
+          <article id="selectedStory" class="tc-card evidence-card">
+            <span class="tc-label">Selected evidence</span>
+            <h2>No case selected</h2>
+            <p>Select a story card to inspect its source, wage theory, sector, and link.</p>
+          </article>
+
+          <article id="watchlist" class="tc-card watchlist-card">
+            <span class="tc-label">Pattern board</span>
+            <h2>Watchlist</h2>
+            <div id="watchlistItems" class="watchlist-items"></div>
+          </article>
+        </section>
+
+        <section id="trends" class="tc-card trend-card" aria-labelledby="trendsHeading">
+          <div class="section-heading compact">
+            <div>
+              <span class="tc-label">BLS LASST</span>
+              <h2 id="trendsHeading">State trend signals</h2>
+            </div>
+            <span class="tc-status tc-status-ok">12-month label</span>
+          </div>
+          <div id="trendTable" class="trend-table" role="table" aria-label="state unemployment trend table"></div>
+        </section>
+      </main>
+    </div>
+
+    <script src="app.js" defer></script>
+  </body>
+</html>

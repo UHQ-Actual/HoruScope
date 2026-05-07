@@ -127,6 +127,42 @@ class WageNewsPipelineTests(unittest.TestCase):
         self.assertIn("## Labor trend signals", brief)
         self.assertIn("## Watchlist", brief)
 
+    def test_pages_data_exports_story_cards_and_watchlist(self):
+        item = {
+            "title": "Ohio restaurant operator pays overtime back wages",
+            "link": "https://example.test/oh",
+            "source": "DOL WHD",
+            "source_type": "official",
+            "published": "2026-05-06T10:00:00+00:00",
+            "summary": "Workers were denied overtime and tip-credit protections.",
+            "score": 11,
+            "states": "OH",
+            "statutes": "FLSA",
+            "sectors": "restaurants",
+            "topics": "back wages,overtime,tip credit",
+            "matched_terms": "back wages,overtime,tip credit",
+        }
+        trends = [
+            {
+                "state": "OH",
+                "series": "LASST390000000000003",
+                "latest_month": "2026-03",
+                "latest_rate": 4.1,
+                "change_12mo": -0.7,
+                "trend": "falling",
+            }
+        ]
+
+        data = p.render_pages_data([item], trends, days=7)
+
+        self.assertEqual(data["window_days"], 7)
+        self.assertEqual(data["stories"][0]["where"], ["OH"])
+        self.assertEqual(data["stories"][0]["topic"], "FLSA")
+        self.assertEqual(data["stories"][0]["score"], 11)
+        self.assertEqual(data["trends"][0]["state"], "OH")
+        self.assertEqual(data["watchlist"][0]["topic"], "back wages")
+        self.assertIn("No current", p.render_pages_data([], [], days=7)["empty_state"]["title"])
+
 
 if __name__ == "__main__":
     unittest.main()

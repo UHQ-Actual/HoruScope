@@ -1,0 +1,113 @@
+{
+  "generated_at": "2026-05-07T01:27:51.754450+00:00",
+  "window_days": 7,
+  "stories": [],
+  "trends": [
+    {
+      "state": "IA",
+      "state_name": "Iowa",
+      "series": "LASST190000000000003",
+      "latest_month": "2026-03",
+      "latest_rate": 3.3,
+      "change_12mo": -0.3,
+      "trend": "falling",
+      "months": 12
+    },
+    {
+      "state": "IL",
+      "state_name": "Illinois",
+      "series": "LASST170000000000003",
+      "latest_month": "2026-03",
+      "latest_rate": 5.1,
+      "change_12mo": 0.5,
+      "trend": "rising",
+      "months": 12
+    },
+    {
+      "state": "IN",
+      "state_name": "Indiana",
+      "series": "LASST180000000000003",
+      "latest_month": "2026-03",
+      "latest_rate": 3.3,
+      "change_12mo": -0.4,
+      "trend": "falling",
+      "months": 12
+    },
+    {
+      "state": "KS",
+      "state_name": "Kansas",
+      "series": "LASST200000000000003",
+      "latest_month": "2026-03",
+      "latest_rate": 3.9,
+      "change_12mo": 0.1,
+      "trend": "flat",
+      "months": 12
+    },
+    {
+      "state": "MI",
+      "state_name": "Michigan",
+      "series": "LASST260000000000003",
+      "latest_month": "2026-03",
+      "latest_rate": 5.0,
+      "change_12mo": -0.3,
+      "trend": "falling",
+      "months": 12
+    },
+    {
+      "state": "MN",
+      "state_name": "Minnesota",
+      "series": "LASST270000000000003",
+      "latest_month": "2026-03",
+      "latest_rate": 4.5,
+      "change_12mo": 0.9,
+      "trend": "rising",
+      "months": 12
+    },
+    {
+      "state": "MO",
+      "state_name": "Missouri",
+      "series": "LASST290000000000003",
+      "latest_month": "2026-03",
+      "latest_rate": 3.9,
+      "change_12mo": -0.1,
+      "trend": "flat",
+      "months": 12
+    },
+    {
+      "state": "NE",
+      "state_name": "Nebraska",
+      "series": "LASST310000000000003",
+      "latest_month": "2026-03",
+      "latest_rate": 3.1,
+      "change_12mo": 0.2,
+      "trend": "rising",
+      "months": 12
+    },
+    {
+      "state": "OH",
+      "state_name": "Ohio",
+      "series": "LASST390000000000003",
+      "latest_month": "2026-03",
+      "latest_rate": 4.1,
+      "change_12mo": -0.7,
+      "trend": "falling",
+      "months": 12
+    },
+    {
+      "state": "WI",
+      "state_name": "Wisconsin",
+      "series": "LASST550000000000003",
+      "latest_month": "2026-03",
+      "latest_rate": 3.5,
+      "change_12mo": 0.3,
+      "trend": "rising",
+      "months": 12
+    }
+  ],
+  "watchlist": [],
+  "summary": "",
+  "empty_state": {
+    "title": "No current Midwest WHD story captured",
+    "body": "Run the collector again or enable additional sources. The interface will populate from stories.json when the pipeline captures in-scope items."
+  }
+}
